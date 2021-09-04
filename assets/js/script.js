@@ -60,33 +60,67 @@ mainHeader.appendChild(startButton);
 
 // -------------------------------------------
 // create questions array
-var questions = [
-    {
-        q: "Commonly used data types do NOT include...",
-        a: "alerts",
-    },
-    {
-        q: "The condition in an if/else statement is enclosed with ___________.",
-        a: "parenthesis",
-    },
-    {
-        q: "Arrays in JavaScript can be used to store ___________",
-        a: "all of the above",
-    },
-    {
-        q: "String values must be enclosed within ________ when being assigned to variables.",
-        a: "quotes",
-    },
-    {
-        q: "A very useful tool used during development and debugging for printing content to the debugger is:",
-        a: "console.log",
-    },
-];
+    var questions = [
+        {
+            q: "Commonly used data types do NOT include...",
+            allAns: {
+            a: "1. strings",
+            b: "2. booleans",
+            c: "3. alerts",
+            d: "4. numbers",
+            },
+            corrAns: "c",
+        },
+        {
+            q: "The condition in an if/else statement is enclosed with ___________.",
+            allAns: {
+            a: "1. quotes",
+            b: "2. curly brackets",
+            c: "3. parenthesis",
+            d: "4. square brackets",
+            },
+            corrAns: "c",
+        },
+        {
+            q: "Arrays in JavaScript can be used to store ___________",
+            allAns: {
+            a: "1. numbers and strings",
+            b: "2. other arrays",
+            c: "3. booleans",
+            d: "4. all of the above",
+            },
+            corrAns: "d",
+        },
+        {
+            q: "String values must be enclosed within ________ when being assigned to variables.",
+            allAns: {
+            a: "1. commas",
+            b: "2. curly brackets",
+            c: "3. quotes",
+            d: "4. parenthesis",
+            },
+            corrAns: "c",
+        },
+        {
+            q: "A very useful tool used during development and debugging for printing content to the debugger is:",
+            allAns: {
+            a: "1. JavaScript",
+            b: "2. terminal/bash",
+            c: "3. for loops",
+            d: "4. console.log",
+            },
+            corrAns: "d",
+        },
+        ];
 var score = 0;
 
 function mainGame() {
+
+
     for (var i = 0; i < questions.length ; i++) {
-        var answer = 
+        mainHeader = questions[i].q;
+        var answer = XXXXX(questions[i].q); // need to check how do i cross reference the answer to the question 
+
     }
 }
 
