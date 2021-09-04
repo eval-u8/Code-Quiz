@@ -17,9 +17,8 @@ viewHighScoreLink.style.fontWeight = 'bold';
 nav.appendChild(viewHighScoreLink);
 
 // add timer top right
-var timerValue = 0;
 var timerDisplay = document.createElement('div');
-timerDisplay.textContent = "Time - " + timerValue;
+timerDisplay.textContent = "Time - 0";
 timerDisplay.style.fontSize = "1.5em";
 timerDisplay.style.marginRight = "1em";
 timerDisplay.style.marginTop = "1em";
@@ -30,20 +29,20 @@ nav.appendChild(timerDisplay);
 var mainDiv = document.createElement('div');
 body.appendChild(mainDiv);
 
-var mainHeader = document.createElement('h1');
-mainHeader.textContent = "Coding Quiz Challenge";
-mainHeader.style.textAlign = 'center';
-mainHeader.style.marginTop = '10%';
-mainDiv.appendChild(mainHeader);
+var centralHeader = document.createElement('h1');
+centralHeader.textContent = "Coding Quiz Challenge";
+centralHeader.style.textAlign = 'center';
+centralHeader.style.marginTop = '10%';
+mainDiv.appendChild(centralHeader);
 
-var mainParag = document.createElement('p');
-mainParag.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
-mainParag.style.width = '75%';
-mainParag.style.textAlign = 'center';
-mainParag.style.margin = '50px auto';
-mainParag.style.fontWeight = 'normal';
-mainParag.style.fontSize = '0.8em';
-mainHeader.appendChild(mainParag);
+var centralParag = document.createElement('p');
+centralParag.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+centralParag.style.width = '75%';
+centralParag.style.textAlign = 'center';
+centralParag.style.margin = '50px auto';
+centralParag.style.fontWeight = 'normal';
+centralParag.style.fontSize = '0.8em';
+centralHeader.appendChild(centralParag);
 
 var startButton = document.createElement('button');
 startButton.className = "start-button"
@@ -56,11 +55,11 @@ startButton.style.padding = "10px 30px";
 startButton.style.textDecoration = "none";
 startButton.style.fontSize = "25px";
 startButton.style.cursor = 'pointer';
-mainHeader.appendChild(startButton);
+centralHeader.appendChild(startButton);
 
 // -------------------------------------------
 // create questions array
-    var questions = [
+    var questionsArr = [
         {
             q: "Commonly used data types do NOT include...",
             allAns: {
@@ -115,14 +114,26 @@ mainHeader.appendChild(startButton);
 var score = 0;
 
 function mainGame() {
-
-
-    for (var i = 0; i < questions.length ; i++) {
-        mainHeader = questions[i].q;
-        var answer = XXXXX(questions[i].q); // need to check how do i cross reference the answer to the question 
-
+    function timer(){
+        var timerValue = 75;
+        var timer = setInterval(function(){
+            timerDisplay.textContent = "Timer - " + timerValue;
+            timerValue--;
+            if (timerValue < 0) {
+                clearInterval(timer);
+                alert("Game Over!");
+            }
+        }, 1000);
     }
+    timer();
+    // for (var i = 0; i < questionsArr.length ; i++) {
+        // centralHeader.textContent = questionsArr[1].q;
+    // }
 }
 
+
+    // after timer starts get questions
+
+
 // whenever the button is clicked, run mainGame
-    startButton.onclick = mainGame();
+    startButton.addEventListener('click', mainGame);
