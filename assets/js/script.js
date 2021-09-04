@@ -131,9 +131,7 @@ function mainGame() {
     // }
 }
 
-
     // after timer starts get questions
-
 
 // whenever the button is clicked, run mainGame
     startButton.addEventListener('click', mainGame);
