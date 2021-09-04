@@ -151,7 +151,7 @@ function getQuestions() {
         ansOptionNode.className = "answer-option-node";
         ansOptionNode.setAttribute("value", `${value}`);
         ansOptionNode.textContent = `${value}`;
-        console.log(ansOptionNode);
+        // console.log(ansOptionNode);
         ansOptionNode.onclick = clickedAns;
         centralParag.appendChild(ansOptionNode);
     }
@@ -178,6 +178,16 @@ function clickedAns() {
     }
 }
 
+// variables for endgame function
+var hsInputButton = document.createElement("button");
+hsInputButton.textContent = "Submit";
+hsInputButton.className = "final-button";
+var hsInput = document.createElement("input");
+hsInput.setAttribute("type", "text");
+hsInput.value = '';
+hsInput.placeholder = "Enter initials here";
+hsInput.className = "hs-input";
+
 // endgame function updating header and p
     function endGame(){
         feedback.className = "hide";
@@ -186,21 +196,26 @@ function clickedAns() {
         centralParag.textContent = "Your final score is ... " + timerValue + "!!!";
         var finalDiv = document.createElement('div');
         centralParag.appendChild(finalDiv);
-        var hsInput = document.createElement("input");
-        hsInput.placeholder = "Enter initials here";
-        hsInput.className = "hs-input";
-        var hsInputButton = document.createElement("button");
-        hsInputButton.textContent = "Submit";
-        hsInputButton.className = "final-button";
         finalDiv.appendChild(hsInput);
         finalDiv.appendChild(hsInputButton);
-        hsInputButton.onclick = hsScreen;
+        hsInputButton.onclick = hsScreenCheck;
     }
 
-    function hsScreen(){
-        if (){
-            
+var hsName = '';
+var hsScore = '';
+
+    function hsScreenCheck(){
+        if (hsInput.value === ''){
+            alert("Since no value was placed in the High Score name box, 'Anonymous' will be used instead.");
+            hsInput.value = "Anonymous";
+            hsScreen;
+        } else {
+            hsScreen;
         }
+    }
+
+    function hsScreen() {
+
     }
 
 // whenever the button is clicked, run mainGame
