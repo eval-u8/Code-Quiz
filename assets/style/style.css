@@ -6,3 +6,26 @@ nav {
     display: flex;
     justify-content: space-between;
 }
+
+.start-button {
+    position: absolute;
+    transform: translate(150%);
+
+}
+
+.answer-option-node {
+    display: flex;
+    margin: 10px auto;
+    background-color: #202a6e;
+    border : none;
+    color : white;
+    padding: 10px;
+    border-radius : 8px;
+    text-decoration : none;
+    font-size : 25px;
+    cursor : pointer;
+}
+
+.answer-option-node:hover, .start-button:hover {
+    background-color: #d916c8;
+}
