@@ -1,13 +1,18 @@
 var body = document.body;
 var currentQuestIndex = 0;
 
-// create nav that holds hs link as well as timer
+// create nav that holds hs link as well as timer and feedback div
 var nav = document.createElement("nav");
 body.appendChild(nav);
 
+var feedback = document.createElement("div");
+feedback.className = "feedback";
+// feedback.setAttribute("id", "hide");
+feedback.textContent = "";
+
 // add high score link up top left
 var viewHighScoreLink = document.createElement("a");
-viewHighScoreLink.href = "#"; // NEED TO FINISH THIS LINK!!!!!!!!
+viewHighScoreLink.href = hsScreen; 
 viewHighScoreLink.textContent = "View High Scores";
 viewHighScoreLink.style.color = "#d916c8"; //bright pink
 viewHighScoreLink.style.textDecoration = "none";
@@ -48,7 +53,6 @@ mainDiv.appendChild(centralParag);
 var startButton = document.createElement("button");
 startButton.className = "start-button";
 startButton.innerHTML = "Start Quiz";
-startButton.style.backgroundColor = "#202a6e"; //dark purple almost blue
 startButton.style.border = "none";
 startButton.style.color = "white";
 startButton.style.borderRadius = "8px";
@@ -71,7 +75,7 @@ var questionsArr = [
             c: "3. alerts",
             d: "4. numbers",
         },
-        corrAns: "c",
+        corrAns: "3. alerts",
     },
     {
         q: "The condition in an if/else statement is enclosed with ___________.",
@@ -81,7 +85,7 @@ var questionsArr = [
             c: "3. parenthesis",
             d: "4. square brackets",
         },
-        corrAns: "c",
+        corrAns: "3. parenthesis",
     },
     {
         q: "Arrays in JavaScript can be used to store ___________",
@@ -91,7 +95,7 @@ var questionsArr = [
             c: "3. booleans",
             d: "4. all of the above",
         },
-        corrAns: "d",
+        corrAns: "4. all of the above",
     },
     {
         q: "String values must be enclosed within ________ when being assigned to variables.",
@@ -101,7 +105,7 @@ var questionsArr = [
             c: "3. quotes",
             d: "4. parenthesis",
         },
-        corrAns: "c",
+        corrAns: "3. quotes",
     },
     {
         q: "A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -111,17 +115,17 @@ var questionsArr = [
             c: "3. for loops",
             d: "4. console.log",
         },
-        corrAns: "d",
+        corrAns: "4. console.log",
     },
 ];
 var score = 0;
 
 function mainGame() {
     startButton.style.display = "none";
+    timerValue = 75;
     function timer() {
-        var timerValue = 75;
         var timer = setInterval(function () {
-            timerDisplay.textContent = "Timer - " + timerValue;
+            timerDisplay.textContent = "Time - " + timerValue;
             timerValue--;
             if (timerValue < 0) {
                 clearInterval(timer);
@@ -134,25 +138,70 @@ function mainGame() {
 }
 
 function getQuestions() {
+    body.appendChild(feedback);
     // save qs array in a var
     var currentQ = questionsArr[currentQuestIndex];
-    console.log(currentQ);
     centralHeader.textContent = currentQ.q;
     // clear question choices
     centralParag.innerHTML = "";
     // LOOP OVER CHOICES
     for (const [key, value] of Object.entries(currentQ.allAns)) {
-        console.log(`${key}: ${value}`);
+        // console.log(`${key}: ${value}`);
         var ansOptionNode = document.createElement("button");
         ansOptionNode.className = "answer-option-node";
         ansOptionNode.setAttribute("value", `${value}`);
         ansOptionNode.textContent = `${value}`;
-        //   ansOptionNode.onclick = questionClick();
+        console.log(ansOptionNode);
+        ansOptionNode.onclick = clickedAns;
         centralParag.appendChild(ansOptionNode);
     }
 }
 
-// after timer starts get questions
+function clickedAns() {
+    // Check if guess is wrong
+    if (this.value !== questionsArr[currentQuestIndex].corrAns) {
+        timerValue -= 10;
+        if (timerValue < 0) {
+            timerValue = 0;
+        }
+        timerDisplay.textContent = "Time - " + timerValue;
+        feedback.textContent = "Wrong...";
+    } else {
+        feedback.textContent = "Correct!";
+    }
+    currentQuestIndex++;
+
+    if (currentQuestIndex === questionsArr.length) {
+        endGame();
+    } else {
+        getQuestions();
+    }
+}
+
+// endgame function updating header and p
+    function endGame(){
+        feedback.className = "hide";
+        timerDisplay = timerValue;
+        centralHeader.textContent = "You are done!!!";
+        centralParag.textContent = "Your final score is ... " + timerValue + "!!!";
+        var finalDiv = document.createElement('div');
+        centralParag.appendChild(finalDiv);
+        var hsInput = document.createElement("input");
+        hsInput.placeholder = "Enter initials here";
+        hsInput.className = "hs-input";
+        var hsInputButton = document.createElement("button");
+        hsInputButton.textContent = "Submit";
+        hsInputButton.className = "final-button";
+        finalDiv.appendChild(hsInput);
+        finalDiv.appendChild(hsInputButton);
+        hsInputButton.onclick = hsScreen;
+    }
+
+    function hsScreen(){
+        if (){
+            
+        }
+    }
 
 // whenever the button is clicked, run mainGame
 startButton.addEventListener("click", mainGame);
