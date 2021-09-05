@@ -1,0 +1,104 @@
+:root {
+    --pink: #d916c8;
+    --purple: #271186;
+}
+
+* {
+    font-family: sans-serif;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-high-score-link {
+    color: var(--pink);
+    margin: 1% 5%;
+    text-decoration: none;
+    font-weight: 540;
+    font-size: larger;
+}
+
+.nav-timer-display {
+    color: var(--purple);
+    margin: 1% 5%;
+    text-decoration: none;
+    font-size: larger;
+    font-weight: 540;
+}
+
+.main,
+.section-feedback {
+    width: 50%;
+    margin: 2.5% auto;
+    text-align: center;
+}
+
+.main-p {
+    line-height: 1.5;
+    font-weight: lighter;
+    font-size: 1.5em;
+}
+
+.section-feedback {
+    border-top: 1.5px solid grey;
+    padding: 1%;
+    color: grey;
+    font-style: italic;
+    font-size: 2em;
+}
+
+.button {
+    background-color: var(--purple);
+    margin: 10px auto;
+    border: none;
+    color: white;
+    padding: 15px 40px;
+    font-size: 1.4em;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#home-button, #clear-hs-button {
+    background-color: var(--purple);
+    margin: 10px 25px;
+    border: none;
+    color: white;
+    padding: 15px 40px;
+    font-size: 1.4em;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#home-button:hover, #clear-hs-button:hover {
+    background-color: var(--pink);
+}
+
+.answer-option-node {
+    display: flex;
+    margin: 10px auto;
+    width: 35%;
+    padding: 10px;
+    font-size: 25px;
+}
+
+.button:hover {
+    background-color: var(--pink);
+}
+
+#submit-hs {
+    padding: 8px 10px;
+    font-size: medium;
+}
+
+#initials-input {
+    height: 30px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--purple);
+}
+
+.hide {
+    display: none;
+}
