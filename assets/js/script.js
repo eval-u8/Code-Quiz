@@ -238,7 +238,7 @@ hsInput.className = "hs-input";
         backHomeBttn.className = "back-to-home";
         backHomeBttn.textContent = "Back to home";
         centralParag.appendChild(backHomeBttn);
-        // backHomeBttn.addEventListener('click', refreshPage());
+        backHomeBttn.addEventListener('click', refreshPage());
 
         var clearHs = document.createElement("button");
         clearHs.className = "back-to-home";
@@ -258,7 +258,7 @@ hsInput.className = "hs-input";
 
     function clearHighScore(){
         localStorage.clear();
-        endGame();
+        hsScreen();
     }
 
     function refreshPage(){
