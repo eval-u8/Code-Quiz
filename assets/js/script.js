@@ -1,5 +1,7 @@
 var body = document.body;
 var currentQuestIndex = 0;
+var timerValue = 0;
+// localStorage.clear();
 
 // create nav that holds hs link as well as timer and feedback div
 var nav = document.createElement("nav");
@@ -13,6 +15,7 @@ feedback.textContent = "";
 // add high score link up top left
 var viewHighScoreLink = document.createElement("a");
 viewHighScoreLink.href = hsScreen; 
+viewHighScoreLink.className = "";
 viewHighScoreLink.textContent = "View High Scores";
 viewHighScoreLink.style.color = "#d916c8"; //bright pink
 viewHighScoreLink.style.textDecoration = "none";
@@ -24,7 +27,8 @@ nav.appendChild(viewHighScoreLink);
 
 // add timer top right
 var timerDisplay = document.createElement("div");
-timerDisplay.textContent = "Time - 0";
+timerDisplay.className = "timer-display-class";
+timerDisplay.textContent = `Time - ${timerValue}`;
 timerDisplay.style.fontSize = "1.5em";
 timerDisplay.style.marginRight = "1em";
 timerDisplay.style.marginTop = "1em";
@@ -120,17 +124,22 @@ var questionsArr = [
 ];
 var score = 0;
 
+
 function mainGame() {
     startButton.style.display = "none";
     timerValue = 75;
     function timer() {
         var timer = setInterval(function () {
-            timerDisplay.textContent = "Time - " + timerValue;
+            timerDisplay.textContent = `Time - ${timerValue}`;
             timerValue--;
             if (timerValue < 0) {
                 clearInterval(timer);
-                // alert("Game Over!"); //PUT THE GAME OVER PART OF THE CODE
-            }
+                alert("Game Over!");
+                location.reload();                
+            } else if (
+                centralHeader.textContent == "You are done!!!" ||
+                centralHeader.textContent == "High Scores!")
+                clearInterval(timer);
         }, 1000);
     }
     timer();
@@ -193,7 +202,7 @@ hsInput.className = "hs-input";
         feedback.className = "hide";
         timerDisplay = timerValue;
         centralHeader.textContent = "You are done!!!";
-        centralParag.textContent = "Your final score is ... " + timerValue + "!!!";
+        centralParag.textContent = "Your final score is ... " + timerDisplay + "!!!";
         var finalDiv = document.createElement('div');
         centralParag.appendChild(finalDiv);
         finalDiv.appendChild(hsInput);
@@ -201,21 +210,45 @@ hsInput.className = "hs-input";
         hsInputButton.onclick = hsScreenCheck;
     }
 
-var hsName = '';
-var hsScore = '';
-
     function hsScreenCheck(){
         if (hsInput.value === ''){
             alert("Since no value was placed in the High Score name box, 'Anonymous' will be used instead.");
             hsInput.value = "Anonymous";
-            hsScreen;
+            hsScreen("Anonymous",timerDisplay);
         } else {
-            hsScreen;
+            hsScreen(hsInput.value, timerDisplay);
         }
     }
 
-    function hsScreen() {
+    function hsScreen(name, score) {
+        var highScore = {name, score};
+        var storedScore = localStorage.getItem('scores');
+        if (storedScore === null){
+            localStorage.setItem('scores', JSON.stringify([highScore]));
+        } else {
+            var parsedScore = JSON.parse(storedScore);
+            parsedScore.push(highScore);
+            parsedScore.sort((a,b) => b.score - a.score);
+            localStorage.setItem("scores", JSON.stringify(parsedScore));
+        }
+        centralHeader.textContent = "High Scores!";
+        centralParag.innerHTML = parsedScore.map((score) => `<li>${score.name} - ${score.score}`).join('');
+        
+        var backHomeBttn = document.createElement("button");
+        backHomeBttn.className = "answer-option-node";
+        backHomeBttn.textContent = "Back to home";
+        backHomeBttn.onclick = location.reload();
 
+        // hide the timer and highs score link
+        nav.className = "hide";
+        
+        // for (i=0; i<parsedScore.length; i++) {
+        //     for (j=0; j<parsedScore[i].length; j++){
+        //     centralParag.textContent = parsedScore[i][j];
+        //     }
+        // }
+
+        
     }
 
 // whenever the button is clicked, run mainGame
