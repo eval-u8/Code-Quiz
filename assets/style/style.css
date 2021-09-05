@@ -46,6 +46,21 @@ p {
     cursor: pointer;
 }
 
+.back-to-home {
+    /* display: flex; */
+    margin: 10px auto;
+    width: 35%;
+    background-color: #202a6e;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
 .hs-input {
     width: 25%;
     height: 30px;

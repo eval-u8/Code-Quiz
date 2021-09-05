@@ -135,7 +135,7 @@ function mainGame() {
             if (timerValue < 0) {
                 clearInterval(timer);
                 alert("Game Over!");
-                location.reload();                
+                refreshPage();           
             } else if (
                 centralHeader.textContent == "You are done!!!" ||
                 centralHeader.textContent == "High Scores!")
@@ -235,9 +235,16 @@ hsInput.className = "hs-input";
         centralParag.innerHTML = parsedScore.map((score) => `<li>${score.name} - ${score.score}`).join('');
         
         var backHomeBttn = document.createElement("button");
-        backHomeBttn.className = "answer-option-node";
+        backHomeBttn.className = "back-to-home";
         backHomeBttn.textContent = "Back to home";
-        backHomeBttn.onclick = location.reload();
+        centralParag.appendChild(backHomeBttn);
+        // backHomeBttn.addEventListener('click', refreshPage());
+
+        var clearHs = document.createElement("button");
+        clearHs.className = "back-to-home";
+        clearHs.textContent = "Clear high scores";
+        centralParag.appendChild(clearHs);
+        clearHs.onclick = clearHighScore();
 
         // hide the timer and highs score link
         nav.className = "hide";
@@ -246,10 +253,16 @@ hsInput.className = "hs-input";
         //     for (j=0; j<parsedScore[i].length; j++){
         //     centralParag.textContent = parsedScore[i][j];
         //     }
-        // }
-
-        
+        // }   
     }
 
+    function clearHighScore(){
+        localStorage.clear();
+        endGame();
+    }
+
+    function refreshPage(){
+        location.reload();
+    }
 // whenever the button is clicked, run mainGame
 startButton.addEventListener("click", mainGame);
