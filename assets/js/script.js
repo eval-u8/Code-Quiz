@@ -1,74 +1,21 @@
 var body = document.body;
 var currentQuestIndex = 0;
 var timerValue = 0;
-// localStorage.clear();
-
-// create nav that holds hs link as well as timer and feedback div
-var nav = document.createElement("nav");
-body.appendChild(nav);
-
-var feedback = document.createElement("div");
-feedback.className = "feedback";
-// feedback.setAttribute("id", "hide");
-feedback.textContent = "";
-
-// add high score link up top left
-var viewHighScoreLink = document.createElement("a");
-viewHighScoreLink.href = hsScreen; 
-viewHighScoreLink.className = "";
-viewHighScoreLink.textContent = "View High Scores";
-viewHighScoreLink.style.color = "#d916c8"; //bright pink
-viewHighScoreLink.style.textDecoration = "none";
-viewHighScoreLink.style.fontSize = "1.2em";
-viewHighScoreLink.style.marginLeft = "1em";
-viewHighScoreLink.style.marginTop = "1em";
-viewHighScoreLink.style.fontWeight = "bold";
-nav.appendChild(viewHighScoreLink);
-
-// add timer top right
-var timerDisplay = document.createElement("div");
-timerDisplay.className = "timer-display-class";
-timerDisplay.textContent = `Time - ${timerValue}`;
-timerDisplay.style.fontSize = "1.5em";
-timerDisplay.style.marginRight = "1em";
-timerDisplay.style.marginTop = "1em";
-nav.appendChild(timerDisplay);
-
-// Initial page h1, p and button.
-var mainDiv = document.createElement("div");
-body.appendChild(mainDiv);
-
-var centralHeader = document.createElement("h1");
-centralHeader.textContent = "Coding Quiz Challenge";
-centralHeader.style.textAlign = "center";
-centralHeader.style.marginTop = "10%";
-mainDiv.appendChild(centralHeader);
-
-var centralParag = document.createElement("p");
-centralParag.textContent =
-    "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
-centralParag.style.width = "75%";
-centralParag.style.textAlign = "center";
-centralParag.style.margin = "50px auto";
-centralParag.style.fontWeight = "lighter";
-centralParag.style.fontSize = "1.8em";
-mainDiv.appendChild(centralParag);
-
-var startButton = document.createElement("button");
-startButton.className = "start-button";
-startButton.innerHTML = "Start Quiz";
-startButton.style.border = "none";
-startButton.style.color = "white";
-startButton.style.borderRadius = "8px";
-startButton.style.textDecoration = "none";
-startButton.style.fontSize = "25px";
-startButton.style.width = "25%";
-startButton.style.padding = "10px 30px";
-// startButton.style.position = "absolute";
-startButton.style.cursor = "pointer";
-mainDiv.appendChild(startButton);
-
-// -------------------------------------------
+var wholeNav = document.querySelector(".nav");
+var navScoreLink = document.querySelector(".nav-high-score-link");
+var navTimerDisplay = document.querySelector(".nav-timer-display");
+var mainHeader = document.querySelector("#main-header");
+var mainP = document.querySelector("#main-p");
+var mainButton = document.querySelector("#main-button");
+var mainHighScores = document.querySelector(".main-high-scores");
+var sectionFeedback = document.querySelector(".section-feedback");
+var score = 0;
+var currentQuestIndex = 0;
+var ansOptionNode = "";
+var initialsInput = document.querySelector("#initials-input");
+var submitHsButton = document.querySelector("#submit-hs");
+var homeButton = document.querySelector("#home-button");
+var clearHsButton = document.querySelector("#clear-hs-button");
 // create questions array
 var questionsArr = [
     {
@@ -122,24 +69,41 @@ var questionsArr = [
         corrAns: "4. console.log",
     },
 ];
-var score = 0;
+// end of questions array
 
+function mainPage() {
+    navScoreLink.textContent = "View High Scores";
+    navTimerDisplay.textContent = `Time Left - ${timerValue}`;
+    mainHeader.textContent = "Coding Quiz Challenge";
+    mainP.textContent =
+        "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+    mainButton.textContent = "Start Quiz";
+    mainButton.className = "button";
+    sectionFeedback.className = "section-feedback hide";
+    initialsInput.className = "hide";
+    submitHsButton.className = "hide";
+    clearHsButton.className = "hide";
+    homeButton.className = "hide";
+    wholeNav.className = "nav";
+}
 
-function mainGame() {
-    startButton.style.display = "none";
+function startQuiz() {
+    mainButton.className = "hide";
     timerValue = 75;
     function timer() {
         var timer = setInterval(function () {
-            timerDisplay.textContent = `Time - ${timerValue}`;
+            navTimerDisplay.textContent = `Time Left - ${timerValue}`;
             timerValue--;
             if (timerValue < 0) {
                 clearInterval(timer);
                 alert("Game Over!");
-                refreshPage();           
+                mainPage();
             } else if (
-                centralHeader.textContent == "You are done!!!" ||
-                centralHeader.textContent == "High Scores!")
+                mainHeader.textContent == "You are done!!!" ||
+                mainHeader.textContent == "High Scores!"
+            ) {
                 clearInterval(timer);
+            }
         }, 1000);
     }
     timer();
@@ -147,22 +111,21 @@ function mainGame() {
 }
 
 function getQuestions() {
-    body.appendChild(feedback);
     // save qs array in a var
     var currentQ = questionsArr[currentQuestIndex];
-    centralHeader.textContent = currentQ.q;
+    mainHeader.textContent = currentQ.q;
     // clear question choices
-    centralParag.innerHTML = "";
+    mainP.textContent = "";
     // LOOP OVER CHOICES
     for (const [key, value] of Object.entries(currentQ.allAns)) {
         // console.log(`${key}: ${value}`);
-        var ansOptionNode = document.createElement("button");
-        ansOptionNode.className = "answer-option-node";
+        ansOptionNode = document.createElement("button");
+        ansOptionNode.className = "button answer-option-node";
         ansOptionNode.setAttribute("value", `${value}`);
         ansOptionNode.textContent = `${value}`;
         // console.log(ansOptionNode);
         ansOptionNode.onclick = clickedAns;
-        centralParag.appendChild(ansOptionNode);
+        mainP.appendChild(ansOptionNode);
     }
 }
 
@@ -173,10 +136,12 @@ function clickedAns() {
         if (timerValue < 0) {
             timerValue = 0;
         }
-        timerDisplay.textContent = "Time - " + timerValue;
-        feedback.textContent = "Wrong...";
+        navTimerDisplay.textContent = `Time Left - ${timerValue}`;
+        sectionFeedback.className = "section-feedback";
+        sectionFeedback.textContent = "Wrong...";
     } else {
-        feedback.textContent = "Correct!";
+        sectionFeedback.className = "section-feedback";
+        sectionFeedback.textContent = "Correct!";
     }
     currentQuestIndex++;
 
@@ -187,82 +152,66 @@ function clickedAns() {
     }
 }
 
-// variables for endgame function
-var hsInputButton = document.createElement("button");
-hsInputButton.textContent = "Submit";
-hsInputButton.className = "final-button";
-var hsInput = document.createElement("input");
-hsInput.setAttribute("type", "text");
-hsInput.value = '';
-hsInput.placeholder = "Enter initials here";
-hsInput.className = "hs-input";
+function endGame() {
+    ansOptionNode.className = "hide";
+    sectionFeedback.className = "hide";
+    navTimerDisplay.textContent = timerValue;
+    mainHeader.textContent = "You are done!!!";
+    mainP.textContent =
+        "Your final score is ... " + navTimerDisplay.innerHTML + "!!!";
+    initialsInput.className = "";
+    submitHsButton.className = "button";
+    wholeNav.className = "nav hide";
+    submitHsButton.onclick = hsScreenCheck;
+}
 
-// endgame function updating header and p
-    function endGame(){
-        feedback.className = "hide";
-        timerDisplay = timerValue;
-        centralHeader.textContent = "You are done!!!";
-        centralParag.textContent = "Your final score is ... " + timerDisplay + "!!!";
-        var finalDiv = document.createElement('div');
-        centralParag.appendChild(finalDiv);
-        finalDiv.appendChild(hsInput);
-        finalDiv.appendChild(hsInputButton);
-        hsInputButton.onclick = hsScreenCheck;
+function hsScreenCheck() {
+    if (initialsInput.value === "") {
+        alert(
+            "Since no value was placed in the High Score name box, 'Anonymous' will be used instead."
+        );
+        initialsInput.value = "Anonymous";
+        hsScreen("Anonymous", timerValue);
+    } else {
+        hsScreen(initialsInput.value, timerValue);
     }
+}
 
-    function hsScreenCheck(){
-        if (hsInput.value === ''){
-            alert("Since no value was placed in the High Score name box, 'Anonymous' will be used instead.");
-            hsInput.value = "Anonymous";
-            hsScreen("Anonymous",timerDisplay);
-        } else {
-            hsScreen(hsInput.value, timerDisplay);
-        }
+function hsScreen(name, score) {
+    initialsInput.className = "hide";
+    submitHsButton.className = "hide";
+    var highScore = { name, score };
+    var storedScore = localStorage.getItem("scores");
+    if (storedScore === null) {
+        mainP.textContent = "There are no high scores :(";
+        localStorage.setItem("scores", JSON.stringify([highScore]));
+    } else {
+        var parsedScore = JSON.parse(storedScore);
+        parsedScore.push(highScore);
+        parsedScore.sort((a, b) => b.score - a.score);
+        parsedScore.splice(10);
+        localStorage.setItem("scores", JSON.stringify(parsedScore));
     }
+    mainHeader.textContent = "High Scores!";
+    mainP.innerHTML = parsedScore
+        .map((score) => `<li>${score.name} - ${score.score}`)
+        .join("");
 
-    function hsScreen(name, score) {
-        var highScore = {name, score};
-        var storedScore = localStorage.getItem('scores');
-        if (storedScore === null){
-            localStorage.setItem('scores', JSON.stringify([highScore]));
-        } else {
-            var parsedScore = JSON.parse(storedScore);
-            parsedScore.push(highScore);
-            parsedScore.sort((a,b) => b.score - a.score);
-            localStorage.setItem("scores", JSON.stringify(parsedScore));
-        }
-        centralHeader.textContent = "High Scores!";
-        centralParag.innerHTML = parsedScore.map((score) => `<li>${score.name} - ${score.score}`).join('');
-        
-        var backHomeBttn = document.createElement("button");
-        backHomeBttn.className = "back-to-home";
-        backHomeBttn.textContent = "Back to home";
-        centralParag.appendChild(backHomeBttn);
-        backHomeBttn.addEventListener('click', refreshPage());
+    homeButton.className = "button";
+    clearHsButton.className = "";
+    homeButton.onclick = refresh;
+    clearHsButton.onclick = clearHighScore;
+    // if (mainP.innerHTML == )
+}
 
-        var clearHs = document.createElement("button");
-        clearHs.className = "back-to-home";
-        clearHs.textContent = "Clear high scores";
-        centralParag.appendChild(clearHs);
-        clearHs.onclick = clearHighScore();
+function clearHighScore() {
+    localStorage.clear();
+    hsScreen();
+}
 
-        // hide the timer and highs score link
-        nav.className = "hide";
-        
-        // for (i=0; i<parsedScore.length; i++) {
-        //     for (j=0; j<parsedScore[i].length; j++){
-        //     centralParag.textContent = parsedScore[i][j];
-        //     }
-        // }   
-    }
+function refresh() {
+    location.reload();
+}
 
-    function clearHighScore(){
-        localStorage.clear();
-        hsScreen();
-    }
-
-    function refreshPage(){
-        location.reload();
-    }
-// whenever the button is clicked, run mainGame
-startButton.addEventListener("click", mainGame);
+mainPage();
+mainButton.addEventListener("click", startQuiz);

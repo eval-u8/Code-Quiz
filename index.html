@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel=stylesheet href="assets/style/style.css">
-    <title>Code-Quiz</title>
-</head>
-<body>
-    <script src="assets/js/script.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/style/style.css" />
+        <title>Code-Quiz</title>
+    </head>
+    <body>
+        <nav class="nav">
+            <div class="nav-high-score-link"></div>
+
+            <div class="nav-timer-display"></div>
+        </nav>
+
+        <main class="main">
+            <div class="main-header">
+                <h1 id="main-header"></h1>
+            </div>
+
+            <div class="main-p">
+                <p id="main-p">
+                </p>
+            </div>
+
+            <div class="main-button">
+                <button class="button" id="main-button">
+                </button>
+            </div>
+
+            <div class="main-high-scores">
+                <input type="text" id="initials-input" class="hide" placeholder="Enter your initials here">
+                <button id="submit-hs" class="hide">Submit High Score</button>
+                <button id="home-button" class="hide button">Go Back</button>
+                <button id="clear-hs-button" class="hide">Clear high scores</button>
+            </div>
+        </main>
+
+        <section>
+            <div class="section-feedback"></div>
+        </section>
+        <script src="./assets/js/script.js"></script>
+    </body>
 </html>
