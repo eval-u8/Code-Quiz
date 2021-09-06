@@ -193,9 +193,7 @@ function hsScreen(name, score) {
         localStorage.setItem("scores", JSON.stringify(parsedScore));
     }
     mainHeader.textContent = "High Scores!";
-    mainP.innerHTML = parsedScore
-        .map((score) => `<li>${score.name} - ${score.score}`)
-        .join("");
+    mainP.innerHTML = parsedScore.map((score) => `<li>${score.name} - ${score.score}`).join("");
 
     homeButton.className = "button";
     clearHsButton.className = "";
